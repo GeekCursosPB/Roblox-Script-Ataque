@@ -1,0 +1,24 @@
+tool = script.Parent
+debounce = nil
+function Attack()
+	if debounce == nil then
+		local anim = tool:WaitForChild("Animation")
+		local humanoid= script.Parent.Parent:WaitForChild("Humanoid")
+		local animTrack = humanoid:LoadAnimation(anim)
+
+		animTrack: Play(0)
+		debounce = true 
+		wait(0.9)
+		debounce = nil
+	end
+	
+end
+
+tool.Activated:Connect(Attack)
+
+tool.Handle.Blade.Touched:Connect(function(hit)
+	local player =  game.Players:GetPlayerFromCharacter(hit.Parent)
+	if player and debounce == true then
+		player.Character:WaitForChild("Humanoid").Health -=10
+	end
+end)
